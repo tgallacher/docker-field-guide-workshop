@@ -1,0 +1,83 @@
+import {
+  Appear,
+  Notes,
+  Head,
+} from 'mdx-deck'
+
+export { dark as theme } from 'mdx-deck/themes'
+
+<Head>
+  <title>Docker Field Guide Workshop</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet" crossOrigin="anonymous" />
+  <link href="https://afeld.github.io/emoji-css/emoji.css" rel="stylesheet" crossOrigin="anonymous" />
+</Head>
+
+
+<img width="500" src="https://github.com/Osones/formations/blob/master/images/docker-media-kit/large_v-trans.png?raw=true" alt="Moby Dock" className="inline-block" />
+
+# Docker Workshop:
+
+<h3 className="text-3xl italic text-gray-700">A Field Guide</h3>
+<h5 className="text-sm mt-5 text-gray-600">Tom Gallacher, Ph.D</h5>
+
+---
+
+# Agenda*
+
+- **09.30 - 10.50**: Docker fundamentals
+- `Coffee`
+- **11.10 - 12.30**: Dockerfile
+- `Lunch`
+- **13.30 - 14.50**: Dockerfile best practices
+- `Coffee`
+- **15.10 - 16.30**: Put it all together
+
+<span className="absolute bottom-0 right-0 mb-3 mr-5 text-base text-gray-700">*Guideline</span>
+
+---
+
+# Docker Fundamentals
+
+---
+
+- `docker` vs. `docker-machine` vs. `docker-compose`
+- `image` vs. `container` vs. `swarms` vs. `stacks` vs. `services`
+- Lots of Docker terminology!
+
+---
+
+import { Split } from 'mdx-deck/layouts'
+
+# Why Docker?
+
+<Split>
+
+<img width="400" src="https://docs.docker.com/images/Container%402x.png" className="inline-block mr-4" />
+
+<img width="400" src="https://docs.docker.com/images/VM%402x.png" className="inline-block" />
+
+</Split>
+
+- Lightweight
+- Portable
+- Scalable
+
+<Notes>
+  - containers run natively on Linux, sharing kernal; lower overhead
+  - VMs full guest OS with virutal access to host resources through "hypervisor".
+</Notes>
+
+---
+
+# Docker (CLI) Concepts
+
+- Stack
+- Service
+- Container
+- Image
+- Volumes
+
+
+

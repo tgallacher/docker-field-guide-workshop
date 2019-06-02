@@ -1,0 +1,24 @@
+{
+  "name": "docker-field-guide-workshop",
+  "version": "0.1.0",
+  "private": true,
+  "main": "index.js",
+  "author": "Tom Gallacher <tgallacher@users.noreply.github.com>",
+  "license": "GPLv3",
+  "scripts": {
+    "start": "mdx-deck deck.mdx",
+    "build": "rimraf dist && mdx-deck build --out-dir dist deck.mdx",
+    "help": "mdx-deck"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tgallacher/docker-field-guide-workshop.git"
+  },
+  "bugs": {
+    "url": "https://github.com/tgallacher/docker-field-guide-workshop/issues"
+  },
+  "dependencies": {
+    "mdx-deck": "^2.3.2",
+    "rimraf": "^2.6.3"
+  }
+}
