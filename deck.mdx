@@ -342,24 +342,9 @@ Recipe guide for creating Docker images
 
 https://docs.docker.com/engine/reference/builder/
 
-<!-- Directives
-: FROM
-: RUN
-: COPY
-: EXPOSE
-: VOLUME
-: ENTRYPOINT
-: CMD -->
-
 <Notes>
   - Build context
 </Notes>
-
-<!-- - how to build code and add to image
-- how to run app in image
-- how to bind-mount for dev experience
-- tagging image
-- push to internal repo -->
 
 ---
 
@@ -624,6 +609,26 @@ curl -i localhost:8080
 
 ---
 
+# Ecercise
+
+bind mount vols
+
+---
+
+# Multi-stage builds
+
+FROM AS
+
+COPY --from
+
+---
+
+# Exercise
+
+Update above to use multi stage
+
+---
+
 # Docker
 Best practices
 
@@ -640,44 +645,6 @@ Best practices
   - base image enables caching and better memory usage
   - Use `bind mounts` in development
 </Notes>
-
----
-
-# Ecercise
-
-bind mount vols
-
----
-
-`lunch`
-
----
-
-# Dockerfile
-
-Recipe guide for Docker images
-
----
-
-# Exercise
-
-Build custom app with more than 1 service
-
-use docker-compose
-
----
-
-# Multi-stage builds
-
-FROM AS
-
-COPY --from
-
----
-
-# Exercise
-
-Update above to use multi stage
 
 ---
 
