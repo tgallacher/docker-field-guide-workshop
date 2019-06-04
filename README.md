@@ -1,3 +1,5 @@
+[![Netlify Status](https://api.netlify.com/api/v1/badges/0b576fbe-2259-4fc2-8abf-1cba7cb53900/deploy-status)](https://app.netlify.com/sites/docker-field-guide-workshop/deploys)
+
 # Docker Workshop: Field Guide
 
 A 1 day Docker workshop for beginners.
