@@ -44,7 +44,7 @@ Provide context on the essentials of Docker to get started and be productive
 
 - Docker fundamentals
 - `Coffee`
-- Dockerfile + services
+- Dockerfile
 - `Lunch`
 - Multi-stage builds
 - `Coffee`
@@ -570,14 +570,57 @@ docker run custom-tail -15
 
 ---
 
-...
+# Exercise
+
+NodeJS App: Creating a Dockerfile
 
 ---
 
+# Tasks
 
-# Exercise...
+Folder: `basic-nodes-dockerfile`
 
-2 basic exercies?
+1. Complete the todo list in the template file.
+1. Build image
+1. Run container and check output
+
+(clone repo if you haven't already)
+
+---
+
+# Solution
+
+---
+
+```bash
+FROM node:lts-alpine
+# Create app directory
+WORKDIR /usr/src/app
+# Install app dependencies
+COPY package*.json ./
+RUN npm install
+# Add app
+COPY . .
+
+EXPOSE 8080
+CMD [ "node", "app.js" ]
+```
+
+---
+
+```bash
+cd exercies/basic-nodejs-dockerfile
+# build image
+docker build -t my-node-app .
+# run container
+docker run -p 8080:8080 my-node-app
+# check output
+curl -i localhost:8080
+```
+
+---
+
+...
 
 ---
 
