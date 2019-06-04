@@ -338,6 +338,236 @@ See: https://docs.docker.com/engine/reference/commandline/image_prune/
 
 # Dockerfile
 
+Recipe guide for creating Docker images
+
+https://docs.docker.com/engine/reference/builder/
+
+<!-- Directives
+: FROM
+: RUN
+: COPY
+: EXPOSE
+: VOLUME
+: ENTRYPOINT
+: CMD -->
+
+<Notes>
+  - Build context
+</Notes>
+
+<!-- - how to build code and add to image
+- how to run app in image
+- how to bind-mount for dev experience
+- tagging image
+- push to internal repo -->
+
+---
+
+# Dockerfile: FROM
+
+Configure the '*base image*'
+
+```
+FROM <image>[:<tag>]
+```
+
+<p className="text-red-800 text-right">*required</p>
+
+---
+
+## FROM: Examples
+
+```
+FROM node:lts-jessie
+FROM node:10-alpine
+FROM node:12-jessie
+
+FROM ruby:2.6-jessie
+FROM ruby:2.5-stretch
+FROM ruby:2.4-stretch
+```
+
+---
+# Dockerfile: RUN
+
+Execute `command` and '*commit*' result on top of current '*layer*'
+
+```
+RUN <command>
+```
+
+---
+## RUN: Examples
+
+```
+RUN npm install
+RUN bundle install
+
+# Note this is bad;
+# we'll find out later why
+RUN yum update
+RUN yum install -y wget
+```
+
+---
+# Dockerfile: COPY
+
+Copy files/dirs from `src` (on `host`) to `dest` (in `image`).
+
+```
+COPY [--chown=<user>:<group>] <src>... <dest>
+```
+
+---
+
+## COPY: Examples
+
+```bash
+COPY ./deploy.sh /deploy.sh
+
+# Some globs can be used as well
+COPY package*.json /home/app/
+
+COPY /src /home/app/
+```
+
+---
+
+# Dockerfile: EXPOSE
+
+'*Expose*' container port to host
+
+```
+EXPOSE <port>[/<protocol>]
+```
+
+---
+
+## EXPOSE: Examples
+
+```
+EXPOSE 80
+EXPOSE 443
+
+EXPOSE 5432
+EXPOSE 1234/udp
+```
+
+<p className="text-gray-600 text-base text-right">TCP is default protocol</p>
+
+---
+
+# Dockerfile: VOLUME
+
+Creates a mount point with the specified name and declare it as holding external (host) data.
+
+```
+VOLUME ["<path>"]
+VOLUME <path>
+```
+
+---
+
+## VOLUME: Examples
+
+```bash
+VOLUME /myvol
+VOLUME ["/var/www/html"]
+VOLUME ["/data"]
+```
+
+---
+
+# Dockerfile: USER
+
+Configures `user` for: `RUN`, `CMD` or `ENTRYPOINT` directives
+
+```
+USER <user>[:<group>] or
+USER <UID>[:<GID>]
+```
+
+---
+
+## USER: Examples
+
+```bash
+USER root
+USER node
+USER www-data
+# use user id and group id
+USER 1001:1001
+```
+
+---
+
+# Dockerfile: CMD
+
+Set default process to execute on startup
+
+```bash
+# preferred
+CMD ["executable","param1","param2"]
+# pass params to ENTRYPOINT
+CMD ["param1","param2"]
+# Shell form (executed in /bin/sh -c)
+CMD command param1 param2
+```
+
+---
+
+## CMD: Examples
+
+```
+CMD ["node", "app.js"]
+CMD ./run.sh
+```
+
+---
+
+# Dockerfile: ENTRYPOINT
+
+Configure container that runs as an executable
+
+```bash
+# exec form
+ENTRYPOINT ["executable", "param1", "param2"]
+# shell form
+ENTRYPOINT command param1 param2
+```
+
+---
+
+## ENTRYPOINT: Examples
+
+```bash
+ENTRYPOINT ["top", "-b"]
+
+ENTRYPOINT ["nginx", "-g", "daemon off;"]
+ENTRYPOINT ["/usr/sbin/apache2ctl", "-D", "FOREGROUND"]
+```
+
+---
+
+# <i class="em em-koala"></i> Tip
+
+Combine `CMD` with `ENTRYPOINT` to provide configurable defaults
+
+```bash
+# Dockerfile -> imaeg name = 'custom-tail'
+ENTRYPOINT ["tail"]
+CMD ["-5"]
+```
+
+---
+
+```bash
+# tails 5 lines
+docker run custom-tail
+# tails 15 lines
+docker run custom-tail -15
+```
+
 ---
 
 ...
@@ -386,18 +616,9 @@ Recipe guide for Docker images
 
 ---
 
-# Dockerfile: FROM
-# Dockerfile: RUN
-# Dockerfile: COPY
-# Dockerfile: EXPOSE
-# Dockerfile: ENTRYPOINT
-# Dockerfile: CMD
-
----
-
 # Exercise
 
-Build custom app with more than service
+Build custom app with more than 1 service
 
 use docker-compose
 
