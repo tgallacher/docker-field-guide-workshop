@@ -28,19 +28,27 @@ export const themes = [
 <h3 className="text-3xl italic text-gray-500">A Field Guide</h3>
 <h5 className="text-sm mt-5 text-gray-600">Tom Gallacher, Ph.D</h5>
 
+<a href="https://github.com/tgallacher/docker-field-guide-workshop/">
+  <img src="./assets/github-light.png" className="inline-block mt-6" width="48" alt="view on github" />
+</a>
+
 ---
 
-# Agenda*
+# Goal
 
-- **09.30 - 10.50**: Docker fundamentals
+Provide context on the essentials of Docker to get started and be productive
+
+---
+
+# Agenda
+
+- Docker fundamentals
 - `Coffee`
-- **11.10 - 12.30**: Dockerfile + services
+- Dockerfile + services
 - `Lunch`
-- **13.30 - 14.50**: Multi-stage builds
+- Multi-stage builds
 - `Coffee`
-- **15.10 - 16.30**: Dockerfile best practices
-
-<span className="absolute bottom-0 right-0 mb-3 mr-5 text-base text-gray-500">*Guideline</span>
+- Dockerfile best practices
 
 ---
 
@@ -85,28 +93,46 @@ import { Split } from 'mdx-deck/layouts'
 
 ---
 
+# First: Docker Architecture
+
+---
+
+# Client - Server
+
+![](https://docs.docker.com/engine/images/engine-components-flow.png)
+
+---
+
 | | |
 | --- | --- |
 | `docker-compose` | client CLI for managing multi-docker container applications |
 | `docker-machine` | remote management of distributed "`docker-daemon`"s |
 | `docker` | docker "`client`" CLI |
-| `docker-api`    | interface between "`docker-daemon`" and "`docker`" client |
-| `docker-daemon` | the long runing "`docker-engine`" system process |
+| `docker api`    | interface between "`docker-daemon`" and "`docker`" client |
+| `docker daemon` | the long runing "`docker-engine`" system process |
 | `docker-engine` | brains which enables Docker's container runtime technology |
 
 ---
 
 # Docker CLI
 
+<h3 className="text-base mb-10 text-gray-700">(Time to get involved)</h3>
+
 Getting started
 
 ---
+
+# Is Docker installed?
 
 ```sh
 docker --version
 ```
 
-Docker version 18.09.2, build 6247962
+=> Docker version 18.09.2, build 6247962
+
+---
+
+# Hello world
 
 ---
 
@@ -118,7 +144,10 @@ docker run hello-world
 
 ---
 
+
 <Invert>
+  <h3>Example Output</h3>
+
   <img src="./assets/docker-hello-world-output.png" />
 </Invert>
 
@@ -132,14 +161,14 @@ docker run hello-world
 - `Container`
 - `Image`
 - `Dockerfile`
-- `Volumes`
+- (`Volumes`)
 
 ---
 
 | | |
 | --- | --- |
 | `Stack` | inter-related "`services`" running in concert |
-| `Swarm` | collection of multiple "`Docker daemons`" joined withina single "`cluster`" |
+| `Swarm` | collection of multiple "`Docker daemons`" joined within a single "`cluster`" |
 | `Service` | configuration of a `container` which can also be scaled across multiple "`Docker daemons`" |
 | `Container` | running instance of an "`image`" |
 | `Image` | read-only snapshot for being able to run a process |
@@ -147,6 +176,174 @@ docker run hello-world
 | `Volumes` | persistent storage |
 
 ---
+
+# Docker (CLI) Concepts
+We'll focus on:
+
+- ~~`Stack`~~
+- ~~`Swarm`~~
+- ~~`Service`~~
+- `Container`
+- `Image`
+- `Dockerfile`
+- (`Volumes`)
+
+<Notes>
+  - Let's jumble the order a bit to make it easier.
+</Notes>
+
+---
+
+# Our *first* app
+
+<h3 className="text-gray-500 mb-10">"Talking whales"</h3>
+
+1. Pull images from public registry
+1. Run images as containers and execute their commands
+1. Understand how to clean up
+
+---
+
+Pull the required image from public registry
+
+```sh
+docker pull docker/whalesay
+```
+
+---
+
+Check the image is available on your machine
+
+```sh
+docker images
+```
+
+---
+
+Run the image to get a container
+
+(and provide the args to the default `CMD`)
+
+```sh
+docker run docker/whalesay 'docker rules!'
+```
+
+---
+
+Is the container still running?
+
+<Appear>
+<p className="text-gray-600">How do we check?</p>
+<p className="text-gray-600">How do we re-execute the command?</p>
+</Appear>
+
+---
+
+```sh
+docker container ls
+```
+
+---
+
+View all containers (including those which are stopped)
+
+```sh
+docker container ls -a
+```
+
+---
+
+# <i class="em em-koala"></i> Tip
+
+Using `docker run` will auto `pull` images which it can't find locally
+
+---
+
+# Cleanup
+
+1. Remove containers
+1. Remove images
+
+---
+
+## Cleanup Containers
+
+Get container ID
+
+```sh
+docker container ls
+```
+
+Remove
+
+```
+docker container rm <container_id>
+```
+
+---
+
+# <i class="em em-koala"></i> Tip
+
+Delete all (stopped) containers
+
+```
+docker container prune
+```
+
+See: https://docs.docker.com/engine/reference/commandline/container_prune/
+
+---
+
+# Cleanup Images
+
+Get image ID
+
+```sh
+docker image ls
+```
+
+Remove
+
+```
+docker image rm <image_id>
+```
+
+---
+
+# <i class="em em-koala"></i> Tip
+
+Delete all unused images
+
+```
+docker image prune
+```
+
+See: https://docs.docker.com/engine/reference/commandline/image_prune/
+
+---
+
+# Recap
+
+1. We've played around with some Docker resource concepts:
+    - `image`, `container`
+1. We've seem some of the Docker CLI commands:
+    - `pull`, `run`, `container`, `image`
+1. And we've done all this with some pre-built images from the **docker hub**
+
+---
+
+# How do we create our own images?
+
+---
+
+# Dockerfile
+
+---
+
+...
+
+---
+
 
 # Exercise...
 
