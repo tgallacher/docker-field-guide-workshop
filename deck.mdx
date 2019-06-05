@@ -322,6 +322,13 @@ See: https://docs.docker.com/engine/reference/commandline/image_prune/
 
 ---
 
+# <i class="em em-koala"></i> Tip
+
+- Delete all containers **first** before deleting images
+- Containers are *tied* to an image so you get an error if you delete an image that has a linked container reference
+
+---
+
 # Recap
 
 1. We've played around with some Docker resource concepts:
@@ -588,7 +595,7 @@ RUN npm install
 COPY . .
 
 EXPOSE 8080
-CMD [ "node", "app.js" ]
+CMD ["node", "app.js" ]
 ```
 
 ---
