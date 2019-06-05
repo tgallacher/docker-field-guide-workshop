@@ -401,7 +401,7 @@ RUN <command>
 ## RUN: Examples
 
 ```
-RUN npm install
+RUN yarn install
 RUN bundle install
 
 # Note this is bad;
@@ -598,11 +598,11 @@ FROM node:lts-jessie
 # Create app directory
 WORKDIR /home/node/app
 # Install app dependencies
-COPY package*.json ./
-RUN npm install
+COPY package.json .
 # Add app
 COPY . .
 
+RUN yarn install
 EXPOSE 8080
 CMD ["node", "app.js" ]
 ```
@@ -726,18 +726,13 @@ CMD ["node", "app.js" ]
 
 ---
 
-...
-
----
-
 # Docker
 Best practices
 
+---
+
 1. Single process per container
-1. Keep images small
-1. Use the right *base image*
-1. Use multi-stage builds
-1. Combine appropriate `RUN` directives
+1. Optimise for small image sizes
 1. Combine shared components into a `base` image
 1. Don't rely on `:latest` tag
 1. Use `volumes` for storage
@@ -758,10 +753,98 @@ Best practices
 1. Order directives from least to most likely to change,
     - e.g. `COPY` should come later
 1. Increase specificity in `COPY` to avoid un-intentional cache bust,
-    - e.g. don't use `COPY . `
-1. Compress `RUN` pkg manager *update* and *install* into same line,
-    - e.g. `RUN apt-get update && apt-get install`
+    - e.g. don't use `COPY . <dest>`
+1. Combine appropriate `RUN` directives
 1. Use official images where possible
     - reduces maintenance time, reduce size, configured for container use
+1. Use *multi-stage* builds where possible
+1. Enable '*Buildkit*' for improved build times
+    - `export DOCKER_BUILDKIT=1`
 
-<!-- /END -->
+---
+
+# Optimisations
+
+Simple Examples
+
+---
+
+# Improve caching
+
+---
+
+```bash
+FROM node:lts-jessie
+WORKDIR /home/node/app
+COPY package.json yarn.lock .
+COPY . .
+
+RUN yarn install
+
+EXPOSE 8080
+CMD ["node", "app.js" ]
+```
+
+---
+
+```bash
+FROM node:lts-jessie
+WORKDIR /home/node/app
+COPY package.json yarn.lock .
+
+RUN yarn install
+
+COPY ./*.js .
+
+EXPOSE 8080
+CMD ["node", "app.js" ]
+```
+
+---
+
+# Compress `RUN` statements
+
+---
+
+```bash
+FROM ubuntu:latest
+
+RUN apt-get update
+RUN apt-get install -y nginx
+
+RUN groupadd -r nginx
+RUN useradd --no-log-init \
+  -r -d /var/www/app -g nginx nginx
+
+...
+```
+
+---
+
+```bash
+# Ignore this optimisation anti-pattern
+FROM ubuntu:latest
+
+RUN apt-get update \
+  && apt-get install -y nginx --no-install-recommends \
+  && rm -rf /var/lib/apt/lists/*
+
+RUN groupadd -r nginx \
+  && useradd --no-log-init \
+  -r -d /var/www/app -g nginx nginx
+```
+
+---
+
+```bash
+# Now we're good
+FROM nginx:latest
+
+...
+```
+
+---
+
+# /END
+
+
