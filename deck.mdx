@@ -571,7 +571,7 @@ docker run custom-tail -15
 
 ---
 
-# Exercise
+# Exercise 01
 
 NodeJS App: Creating a Dockerfile
 
@@ -594,7 +594,7 @@ Folder: `basic-nodejs-dockerfile`
 ---
 
 ```bash
-FROM node:lts-alpine
+FROM node:lts-jessie
 # Create app directory
 WORKDIR /home/node/app
 # Install app dependencies
@@ -630,7 +630,7 @@ curl -i localhost:8080
 
 ---
 
-# Exercise: Bind mounts
+# Exercise 02: Bind mounts
 
 Use a bind-mount to create an effective developer experience.
 
@@ -673,22 +673,61 @@ curl -i localhost:8080
 
 ---
 
-...
-
----
-
 # Multi-stage builds
 
-FROM AS
-
-COPY --from
+Docker image optimisation
 
 ---
 
-# Exercise
+# Directives
+
+We need to modify 2 of our directives:
+
+- `FROM <image>[:<tag>] AS <stage_name>`
+- `COPY --from=<stage_ref | base>`
+
+---
+
+# Exercise 03
 
 Update above to use multi stage
 
+---
+
+# Solution
+
+---
+
+```bash
+FROM node:lts-jessie AS build
+WORKDIR /home/node/app
+COPY package*.json ./
+RUN yarn install
+COPY . .
+
+# ...contd
+```
+
+---
+
+```
+# ...
+
+RUN yarn build
+FROM node:lts-alpine
+WORKDIR /home/node/app
+COPY --from=build /home/node/app/dist .
+
+EXPOSE 8080
+CMD ["node", "app.js" ]
+```
+
+---
+
+
+...
+
+---
 ---
 
 # Docker
