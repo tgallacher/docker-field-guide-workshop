@@ -579,7 +579,7 @@ NodeJS App: Creating a Dockerfile
 
 # Tasks
 
-Folder: `basic-nodes-dockerfile`
+Folder: `basic-nodejs-dockerfile`
 
 1. Complete the todo list in the template file.
 1. Build image
@@ -596,7 +596,7 @@ Folder: `basic-nodes-dockerfile`
 ```bash
 FROM node:lts-alpine
 # Create app directory
-WORKDIR /usr/src/app
+WORKDIR /home/node/app
 # Install app dependencies
 COPY package*.json ./
 RUN npm install
@@ -621,13 +621,49 @@ curl -i localhost:8080
 
 ---
 
-...
+# Docker: DevExp
+
+- We have app all packaged in a Docker image
+- What if we want to do rapid iterations?
+- Do we need to keep rebuilding the image over and over?
 
 ---
 
-# Ecercise
+# Exercise: Bind mounts
 
-bind mount vols
+Use a bind-mount to create an effective developer experience.
+
+---
+
+# Tasks
+
+Folder: `basic-nodejs-bind-mount`
+
+1. Run `yarn install` in the exercise folder
+1. Build the image
+1. Run the container using `docker run`
+1. Customise the `run` command to bind mount the exercise folder into the container.
+1. Change the contents of `app.js` response and verify it changes in the output
+
+---
+
+# Solution
+
+```bash
+cd exercies/basic-nodejs-bind-mount
+# build image
+docker build -t my-node-dev-app .
+# run container
+docker run -p 8080:8080 -v $PWD:/home/node/app my-node-dev-app
+# check output
+curl -i localhost:8080
+# Change `app.js` response
+curl -i localhost:8080
+```
+
+---
+
+...
 
 ---
 

@@ -17,6 +17,6 @@
 # Base image directive should go here.
 
 # Create app directory
-WORKDIR /usr/src/app
+WORKDIR /home/node/app
 
 # Everything else should go here
