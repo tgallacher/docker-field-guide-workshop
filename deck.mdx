@@ -623,7 +623,8 @@ curl -i localhost:8080
 
 # Docker: DevExp
 
-- We have app all packaged in a Docker image
+- We have an app all packaged in a Docker image
+
 - What if we want to do rapid iterations?
 - Do we need to keep rebuilding the image over and over?
 
@@ -654,7 +655,16 @@ cd exercies/basic-nodejs-bind-mount
 # build image
 docker build -t my-node-dev-app .
 # run container
-docker run -p 8080:8080 -v $PWD:/home/node/app my-node-dev-app
+docker run \
+  -p 8080:8080 \
+  -v $PWD:/home/node/app \
+  my-node-dev-app
+```
+
+---
+# Solution: contd.
+
+```bash
 # check output
 curl -i localhost:8080
 # Change `app.js` response
