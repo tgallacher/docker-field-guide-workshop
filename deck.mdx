@@ -579,7 +579,7 @@ NodeJS App: Creating a Dockerfile
 
 # Tasks
 
-Folder: `basic-nodejs-dockerfile`
+Folder: `01-nodejs-dockerfile`
 
 1. Complete the todo list in the template file.
 1. Build image
@@ -610,7 +610,7 @@ CMD ["node", "app.js" ]
 ---
 
 ```bash
-cd exercies/basic-nodejs-dockerfile
+cd exercies/01-nodejs-dockerfile
 # build image
 docker build -t my-node-app .
 # run container
@@ -638,7 +638,7 @@ Use a bind-mount to create an effective developer experience.
 
 # Tasks
 
-Folder: `basic-nodejs-bind-mount`
+Folder: `02-nodejs-bind-mount`
 
 1. Run `yarn install` in the exercise folder
 1. Build the image
@@ -651,7 +651,7 @@ Folder: `basic-nodejs-bind-mount`
 # Solution
 
 ```bash
-cd exercies/basic-nodejs-bind-mount
+cd exercies/02-nodejs-bind-mount
 # build image
 docker build -t my-node-dev-app .
 # run container
@@ -690,7 +690,9 @@ We need to modify 2 of our directives:
 
 # Exercise 03
 
-Update above to use multi stage
+Folder: `03-nodejs-multistage-build`
+
+1. Optimise our Dockerfile using the *multi-stage builds* pattern.
 
 ---
 
@@ -714,7 +716,7 @@ COPY . .
 # ...
 
 RUN yarn build
-FROM node:lts-alpine
+FROM node:lts-jessie
 WORKDIR /home/node/app
 COPY --from=build /home/node/app/dist .
 
@@ -724,10 +726,8 @@ CMD ["node", "app.js" ]
 
 ---
 
-
 ...
 
----
 ---
 
 # Docker
