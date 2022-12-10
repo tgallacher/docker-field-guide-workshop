@@ -7,7 +7,7 @@
     "build": "parcel build app.js --target node --bundle-node-modules"
   },
   "dependencies": {
-    "express": "^4.17.1"
+    "express": "^4.17.3"
   },
   "devDependencies": {
     "parcel-bundler": "^1.12.3"
